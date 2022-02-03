@@ -1,18 +1,20 @@
 
 import tkinter as tk
-from tkinter import ttk
-
+from tkinter import Toplevel, ttk
+from tkinter import Canvas
+from PIL import Image, ImageTk
 root = tk.Tk()
-root.title ('iMedic')
 
-photo = tk.PhotoImage(file = "Dark_theme_logo_c.png")
+result_window = Toplevel()
+result_window.title("Yay!")
+result_window.geometry("370x450")
+result_window.config(background="#3C3F41")
 
-frame = ttk.Frame(root, relief = tk.RAISED)
-frame.grid(row = 0, column = 0, sticky = tk.NSEW)
-label = tk.Label(
-    frame, image=photo, compound = tk.CENTER,
-    font = "Helvetica 40 bold",
-    foreground = "yellow", text = "Welcome")
-label.grid(row = 0, column = 0, sticky = tk.NSEW)
+bg_image = tk.PhotoImage(file="Result_Images/1.png")
+
+my_canvas = Canvas(result_window,width=370,height=450)
+my_canvas.pack(fill="both",expand=True)
+
+my_canvas.create_image(0,0,image = bg_image,anchor="nw")
 
 root.mainloop()
