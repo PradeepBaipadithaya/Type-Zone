@@ -1,4 +1,5 @@
 from cProfile import label
+from mimetypes import init
 from random import random
 from textwrap import wrap
 from tkinter import *
@@ -14,7 +15,8 @@ root = Tk()
 root.title("Type Zone")
 root.geometry("999x680")
 root.minsize(900, 630)
-root.maxsize(1000,800)
+root.maxsize(1000,700)
+root.iconbitmap("C:\\Users\\pc\\Desktop\\Type-Zone\\logo.ico")
 # root.iconbitmap()
 min =[1,1.5,2]
 level = ["Easy","Medium","Hard"]
@@ -25,25 +27,31 @@ def type():
     global seconds
     global minutes
     
+    
     def counter():
         global seconds
         global minutes
         number_of_word=0
         i=0
+        timer = True
         
         time_count_label.config(text=f"0{minutes} : {seconds}")
         if seconds==0 and minutes ==0:
+            def retry():
+                t_body_frame.destroy()
+                result_window.destroy()
+                initialize()    
             entered_text = text_widget.get(1.0,END)
             label_text_frame.destroy()
             text_frame.destroy()
-            result_frame = Frame(t_body_frame,bg="#3C3F41",width=900,height=350)
+            result_frame = Frame(t_body_frame,bg="#3C3F41",width=900,height=340)
             result_frame.grid(row=2, column=0,sticky=W,ipadx=22,padx=(30,30),pady=20)
             result_frame.grid_propagate(0)
-            result_label_frame = Frame(result_frame, bg="#3C3F41",width=900,height=50)
+            result_label_frame = Frame(result_frame, bg="#3C3F41",width=900,height=40)
             label_text =Label(result_label_frame,text="Result",font=("Lobster 25 "), bg="#3C3F41",fg ="white")
             label_text.grid(row=0,column=0,sticky=W)
             result_label_frame.grid(row=0, column=0,sticky=W)
-            result_frame_1 = Frame(result_frame, bg="#45494A",width=870,height=300)
+            result_frame_1 = Frame(result_frame, bg="#45494A",width=870,height=280)
             result_frame_1.grid(row=1,column=0,pady=20,padx=(50,50))
             result_frame_1.grid_propagate(0)
             entered_list =entered_text.split()
@@ -55,7 +63,7 @@ def type():
                 if entered_list[i]==content_list[i]:                   
                     if textInLine<70 and num_line <10:
                         textInLine+=len(entered_list[i])
-                        result_label = Label(result_frame_1,text =f"{entered_list[i]}",font=("Lobster 14 "), bg="#45494A",fg="green", justify="center").grid(row=j, column=k,padx=0,pady=0)
+                        result_label = Label(result_frame_1,text =f"{entered_list[i]}",font=("Lobster 15 "), bg="#45494A",fg="green", justify="center").grid(row=j, column=k,padx=0,pady=0)
                         k+=1
                         num_line+=1
                         number_of_word+=1
@@ -64,13 +72,13 @@ def type():
                         textInLine =0
                         j+=1
                         k=0
-                        result_label = Label(result_frame_1,text =f"{entered_list[i]}",font=("Lobster 14 "), bg="#45494A",fg="green", justify="center").grid(row=j, column=k,padx=0,pady=0)
+                        result_label = Label(result_frame_1,text =f"{entered_list[i]}",font=("Lobster 15 "), bg="#45494A",fg="green", justify="center").grid(row=j, column=k,padx=0,pady=0)
                         number_of_word+=1
                         k+=1
                 else:
                     if textInLine<70 and num_line<10:
                         textInLine+=len(entered_list[i])
-                        result_label = Label(result_frame_1,text =f"{entered_list[i]}",font=("Lobster 14 "), bg="#45494A",fg="red", justify="center").grid(row=j, column=k,padx=0,pady=0)
+                        result_label = Label(result_frame_1,text =f"{entered_list[i]}",font=("Lobster 15 "), bg="#45494A",fg="red", justify="center").grid(row=j, column=k,padx=0,pady=0)
                         num_line+=1
                         k+=1
                     else:
@@ -79,7 +87,7 @@ def type():
                         j+=1
                         k=0
                         
-                        result_label = Label(result_frame_1,text =f"{entered_list[i]}",font=("Lobster 14 "), bg="#45494A",fg="red", justify="center").grid(row=j, column=k,padx=0,pady=0)
+                        result_label = Label(result_frame_1,text =f"{entered_list[i]}",font=("Lobster 15 "), bg="#45494A",fg="red", justify="center").grid(row=j, column=k,padx=0,pady=0)
                         k+=1
                 i+=1 
   
@@ -94,6 +102,7 @@ def type():
             result_window.title("Yay!")
             result_window.geometry("370x450")
             result_window.config(background="#3C3F41")
+            result_window.iconbitmap("C:\\Users\\pc\\Desktop\\Type-Zone\\logo.ico")
             z = random.randint(1,4)
             bg_color =['#02FB5D','#F2F219','#BCEF1D','#17F2F2']
             bg_image = PhotoImage(file =f"Result_Images//{z}.png")
@@ -106,16 +115,20 @@ def type():
             my_canvas.create_text(180,170,text=f"{number_of_words_per_min}",font=("Ubuntu 100 "),fill=f"{bg_color[z-1]}")
             my_canvas.create_text(180,250,text="WPM",font=("Ubuntu 50 bold"),fill=f"{bg_color[z-1]}")
 
-            retry_button =Button(result_window,text ="Retry", font=("Lobster 20 bold"), bg="#45494A",fg ="#F9F2FA",highlightthickness=2,cursor="hand2")
-            retry_button_window =my_canvas.create_window(180,330,anchor ='nw',window=retry_button)
+            retry_button =Button(result_window,text ="Retry", font=("Lobster 20 bold"), bg="#45494A",fg =f"{bg_color[z-1]}",highlightthickness=2,cursor="hand2",command =retry)
+            
+            retry_button_window =my_canvas.create_window(150,350,anchor ='nw',window=retry_button)
+            timer =False
 
 
         if seconds == 0:
             minutes-=1
             seconds =60
-        
-        time_count_label.after(1000,counter)
-        seconds-=1
+        if timer:
+            time_count_label.after(1000,counter)
+            seconds-=1
+        else:
+            time_count_label.config(text="00 : 00")
 
     global body_frame
     global footer_frame
@@ -130,7 +143,7 @@ def type():
         seconds = 29
     else :
         minutes = 0
-        seconds = 5
+        seconds = 59
 
     body_frame.destroy()
     footer_frame.destroy()
@@ -269,6 +282,7 @@ def decr_min():
 
 #Title Frame
 def initialize():
+    global img
     global min_label
     global inner_body_frame
     global increment
@@ -279,6 +293,7 @@ def initialize():
     global title_frame
     global body_frame
     global footer_frame
+    
     title_frame = Frame(root, width=1000,height=100,bg="#4B4B4B",borderwidth=0, highlightthickness=0)
     img = ImageTk.PhotoImage(Image.open("Images/Dark_theme_logo.png"))
     pic_frame = Frame(title_frame)
@@ -341,7 +356,7 @@ def initialize():
 
 
     #Footer Frame
-    footer_frame =Frame(root,bg="#3C3F41",width=1000,height=200)
+    footer_frame =Frame(root,bg="#3C3F41",width=1000,height=220)
     type_button =Button(footer_frame,text ="Type", font=("Lobster 20 bold"), bg="#45494A",fg ="#F9F2FA",highlightthickness=2,cursor="hand2",command=type)
     type_button.grid(row=0,column=0,padx=700,pady=30)
     footer_frame.grid(row=2,column=0)
