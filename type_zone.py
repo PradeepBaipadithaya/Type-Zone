@@ -1,12 +1,5 @@
-from cProfile import label
-from mimetypes import init
-from random import random
-from textwrap import wrap
 from tkinter import *
-from turtle import width
 from PIL import Image, ImageTk
-from click import wrap_text
-from matplotlib.pyplot import text
 from tkinter import messagebox
 import random
 from tkinter import ttk
@@ -16,7 +9,7 @@ root.title("Type Zone")
 root.geometry("999x680")
 root.minsize(900, 630)
 root.maxsize(1000,700)
-root.iconbitmap("C:\\Users\\pc\\Desktop\\Type-Zone\\logo.ico")
+root.iconbitmap("logo.ico")
 # root.iconbitmap()
 min =[1,1.5,2]
 level = ["Easy","Medium","Hard"]
@@ -102,7 +95,7 @@ def type():
             result_window.title("Yay!")
             result_window.geometry("370x450")
             result_window.config(background="#3C3F41")
-            result_window.iconbitmap("C:\\Users\\pc\\Desktop\\Type-Zone\\logo.ico")
+            result_window.iconbitmap("logo.ico")
             z = random.randint(1,4)
             bg_color =['#02FB5D','#F2F219','#BCEF1D','#17F2F2']
             bg_image = PhotoImage(file =f"Result_Images//{z}.png")
@@ -164,7 +157,7 @@ def type():
     t_body_text_frame = Frame(t_body_frame,bg="#45494A",width=900,height=150)
     t_body_text_frame.grid(row=0, column=0,sticky=W)
     t_body_text_label =Label(t_body_text_frame,text="Here is your text",font=("Lobster 25 "), bg="#3C3F41",fg ="white")
-    t_body_text_label.grid(row=0,column =0,ipadx=20,sticky=W)
+    t_body_text_label.grid(row=0,column =0,ipadx=20,sticky=W,ipady=15)
 
     t_inner_body_frame =Frame(t_body_frame,bg="#45494A",width=900,height=250)
     t_inner_body_frame.grid(row=1,column=0,ipadx=30,padx=(20,5))
@@ -176,7 +169,7 @@ def type():
     label_text_frame = Frame(t_body_frame,bg="#45494A",width=900,height=150)
     label_text_frame.grid(row=2, column=0,sticky=W)
     label_text =Label(label_text_frame,text="Hurry up! Dont think just write :-)",font=("Lobster 25 "), bg="#3C3F41",fg ="white")
-    label_text.grid(row=0,column =0,ipadx=20,sticky=W)
+    label_text.grid(row=0,column =0,ipadx=20,sticky=W,ipady=15)
 
     text_frame = Frame(t_body_frame,bg="#45494A",width=900,height=250)
     text_frame.grid(row=3,column=0,ipadx=30,padx=(20,5),pady=20)
@@ -184,10 +177,6 @@ def type():
     text_widget.pack()
     text_frame.grid_propagate(0)
     counter()
-
-
-
-
 
 def incr_level():
     global l
@@ -315,9 +304,9 @@ def initialize():
     body_text_frame = Frame(body_frame,bg="#3C3F41",width=900,height=150)
     body_text_frame.grid(row=0, column=0,sticky=W)
     body_text_label =Label(body_text_frame,text="Hi there!",font=("Lobster 25 "), bg="#3C3F41",fg ="white")
-    body_text_label.grid(row=0,column =0,ipadx=20,sticky=W)
+    body_text_label.grid(row=0,column =0,ipadx=20,pady =(5,5),sticky=W)
     body_text_label =Label(body_text_frame,text="Ready to break your old milestone, give it your best shot.",font=("Lobster 15 "), bg="#3C3F41",fg ="white")
-    body_text_label.grid(row=1,column =0,ipadx=30)
+    body_text_label.grid(row=1,column =0,ipadx=30,pady=(0,20))
 
 
     inner_body_frame =Frame(body_frame,bg="#45494A",width=900,height=350)
@@ -357,7 +346,7 @@ def initialize():
 
     #Footer Frame
     footer_frame =Frame(root,bg="#3C3F41",width=1000,height=220)
-    type_button =Button(footer_frame,text ="Type", font=("Lobster 20 bold"), bg="#45494A",fg ="#F9F2FA",highlightthickness=2,cursor="hand2",command=type)
+    type_button =Button(footer_frame,text ="Type", font=("Lobster 20 bold"), bg="#262424",fg ="#F9F2FA",highlightthickness=2,cursor="hand2",command=type,width=7)
     type_button.grid(row=0,column=0,padx=700,pady=30)
     footer_frame.grid(row=2,column=0)
     footer_frame.grid_propagate(0)
